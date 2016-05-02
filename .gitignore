@@ -1,0 +1,9 @@
+target/
+
+### Java template
+*.class
+
+hs_err_pid*
+
+.idea
+mani-beans.iml
