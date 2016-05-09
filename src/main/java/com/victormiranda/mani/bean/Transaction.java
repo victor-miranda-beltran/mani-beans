@@ -95,6 +95,19 @@ public class Transaction {
 		BigDecimal amount;
 		TransactionStatus status;
 
+		public Builder(final Transaction source) {
+			id = source.getId();
+			uid = source.getUid();
+			description = source.getDescription();
+			descriptionProcessed = source.getDescriptionProcessed();
+			category = source.getCategory();
+			account = source.getAccount();
+			date = source.getDate();
+			flow = source.getFlow();
+			amount = source.getAmount();
+			status = source.getStatus();
+		}
+
 		public Transaction build() {
 			if (uid == null || description == null) {
 				throw new IllegalStateException("missing fields, work in progress");
