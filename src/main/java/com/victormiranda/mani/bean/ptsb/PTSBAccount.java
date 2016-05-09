@@ -34,7 +34,7 @@ public final class PTSBAccount {
 	@Override
 	public String toString() {
 		return "PTSBAccount{" +
-				"id='" + id + '\'' +
+				"withId='" + id + '\'' +
 				", uid='" + uid + '\'' +
 				", availableBalance=" + availableBalance +
 				", currentBalance=" + currentBalance +

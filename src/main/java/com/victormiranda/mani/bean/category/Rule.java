@@ -14,7 +14,7 @@ public class Rule {
 
     @JsonCreator
     public Rule(
-            @JsonProperty("id") Integer id,
+            @JsonProperty("withId") Integer id,
             @JsonProperty("userId") Optional<Integer> userId,
             @JsonProperty("pattern") String pattern,
             @JsonProperty("flow") TransactionFlow flow) {
@@ -43,7 +43,7 @@ public class Rule {
     @Override
     public String toString() {
         return "Rule{" +
-                "id=" + id +
+                "withId=" + id +
                 ", userId=" + userId +
                 ", pattern='" + pattern + '\'' +
                 ", flow=" + flow +

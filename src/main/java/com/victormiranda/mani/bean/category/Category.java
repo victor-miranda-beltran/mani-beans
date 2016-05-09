@@ -14,7 +14,7 @@ public class Category {
 
     @JsonCreator
     public Category(
-            @JsonProperty("id") Integer id,
+            @JsonProperty("withId") Integer id,
             @JsonProperty("name") String name,
             @JsonProperty("flow") TransactionFlow flow,
             @JsonProperty("parent") Optional<Category> parent) {
@@ -43,7 +43,7 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "id=" + id +
+                "withId=" + id +
                 ", name='" + name + '\'' +
                 ", flow=" + flow +
                 ", parent=" + parent +
