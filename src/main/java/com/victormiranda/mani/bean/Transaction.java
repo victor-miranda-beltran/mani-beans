@@ -1,6 +1,7 @@
 package com.victormiranda.mani.bean;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class Transaction {
 	private final Optional<Integer> id;
 	private final String uid;
+	@JsonBackReference
 	private final Optional<AccountInfo> account;
 	private final Optional<Category> category;
 	private final String description;
@@ -107,6 +109,8 @@ public class Transaction {
 			amount = source.getAmount();
 			status = source.getStatus();
 		}
+
+		public Builder() {}
 
 		public Transaction build() {
 			if (uid == null || description == null) {

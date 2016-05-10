@@ -1,9 +1,8 @@
 package com.victormiranda.mani.bean;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -12,8 +11,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+@JsonDeserialize(builder = AccountInfo.Builder.class)
 public final class AccountInfo {
 	private final String name;
 	private final String accountNumber;
@@ -21,39 +20,23 @@ public final class AccountInfo {
 	private final String uid;
 	private final BigDecimal availableBalance;
 	private final BigDecimal currentBalance;
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private final LocalDate lastSynced;
 	@JsonManagedReference
 	private final List<Transaction> transactions;
 
-	@JsonCreator
-	public AccountInfo(
-			@JsonProperty("name") String name,
-			@JsonProperty("accountNumber") String accountNumber,
-			@JsonProperty("uid") String uid,
-			@JsonProperty("availableBalance") BigDecimal availableBalance,
-			@JsonProperty("currentBalance") BigDecimal currentBalance,
-			@JsonProperty("lastSynced") LocalDate lastSynced,
-			@JsonProperty("transactions") Set<Transaction> transactionSet) {
-		this.name = name;
-		this.accountNumber = accountNumber;
-		this.alias = name;
-		this.uid = uid;
-		this.availableBalance = availableBalance;
-		this.currentBalance = currentBalance;
-		this.lastSynced = lastSynced;
-		this.transactions = new ArrayList<>(transactionSet);
+	private AccountInfo(final Builder builder) {
+		this.name = builder.name;
+		this.accountNumber = builder.accountNumber;
+		this.alias = builder.alias;
+		this.uid = builder.uid;
+		this.availableBalance = builder.availableBalance;
+		this.currentBalance = builder.currentBalance;
+		this.lastSynced = builder.lastSynced;
+		this.transactions = new ArrayList<>();
 	}
 
-	public AccountInfo(String name, String accountNumber, String alias, String uid, BigDecimal availableBalance, BigDecimal currentBalance, LocalDate lastSynced, Set<Transaction> transactions) {
-		this.name = name;
-		this.accountNumber = accountNumber;
-		this.alias = alias;
-		this.uid = uid;
-		this.availableBalance = availableBalance;
-		this.currentBalance = currentBalance;
-		this.lastSynced = lastSynced;
-		this.transactions = new ArrayList<>(transactions);
-	}
 
 	public String getName() {
 		return name;
@@ -79,8 +62,6 @@ public final class AccountInfo {
 		return currentBalance;
 	}
 
-	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonDeserialize(using = LocalDateDeserializer.class)
 	public LocalDate getLastSynced() {
 		return lastSynced;
 	}
@@ -89,16 +70,54 @@ public final class AccountInfo {
 		return transactions;
 	}
 
-	@Override
-	public String toString() {
-		return "AccountInfo{" +
-				"name='" + name + '\'' +
-				", accountNumber='" + accountNumber + '\'' +
-				", uid='" + uid + '\'' +
-				", availableBalance=" + availableBalance +
-				", currentBalance=" + currentBalance +
-				", lastSynced=" + lastSynced +
-				", transactions=" + transactions +
-				'}';
+	@JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
+	public static class Builder {
+		String name;
+		String accountNumber;
+		String alias;
+		String uid;
+		BigDecimal availableBalance;
+		BigDecimal currentBalance;
+		LocalDate lastSynced;
+
+		public Builder withName(final String val) {
+			this.name = val;
+			return this;
+		}
+
+		public Builder withAccountNumber(final String val) {
+			this.accountNumber = val;
+			return this;
+		}
+
+		public Builder withAlias(final String val) {
+			this.alias = val;
+			return this;
+		}
+
+		public Builder withUid(final String val) {
+			this.uid = val;
+			return this;
+		}
+
+		public Builder withAvailableBalance(final BigDecimal val) {
+			this.availableBalance = val;
+			return this;
+		}
+
+		public Builder withCurrentBalance(final BigDecimal val) {
+			this.currentBalance = val;
+			return this;
+		}
+		public Builder withLastSynced(final LocalDate val) {
+			this.lastSynced = val;
+			return this;
+		}
+
+		public AccountInfo build() {
+			return new AccountInfo(this);
+		}
 	}
+
+
 }
