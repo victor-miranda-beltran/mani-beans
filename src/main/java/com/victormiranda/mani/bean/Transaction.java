@@ -19,7 +19,6 @@ import java.util.Optional;
 public class Transaction {
 	private final Optional<Integer> id;
 	private final String uid;
-	@JsonBackReference
 	private final Optional<AccountInfo> account;
 	private final Optional<Category> category;
 	private final String description;

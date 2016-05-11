@@ -1,5 +1,6 @@
 package com.victormiranda.mani.bean;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -24,7 +25,7 @@ public final class AccountInfo {
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private final LocalDate lastSynced;
-	@JsonManagedReference
+	@JsonBackReference
 	private final List<Transaction> transactions;
 
 	private AccountInfo(final Builder builder) {
@@ -39,6 +40,9 @@ public final class AccountInfo {
 		this.transactions = new ArrayList<>();
 	}
 
+	public Integer getId() {
+		return id;
+	}
 
 	public String getName() {
 		return name;
