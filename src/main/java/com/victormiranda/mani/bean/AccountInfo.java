@@ -14,6 +14,7 @@ import java.util.List;
 
 @JsonDeserialize(builder = AccountInfo.Builder.class)
 public final class AccountInfo {
+	private final Integer id;
 	private final String name;
 	private final String accountNumber;
 	private final String alias;
@@ -27,6 +28,7 @@ public final class AccountInfo {
 	private final List<Transaction> transactions;
 
 	private AccountInfo(final Builder builder) {
+		this.id = builder.id;
 		this.name = builder.name;
 		this.accountNumber = builder.accountNumber;
 		this.alias = builder.alias;
@@ -72,6 +74,7 @@ public final class AccountInfo {
 
 	@JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
 	public static class Builder {
+		Integer id;
 		String name;
 		String accountNumber;
 		String alias;
@@ -79,6 +82,11 @@ public final class AccountInfo {
 		BigDecimal availableBalance;
 		BigDecimal currentBalance;
 		LocalDate lastSynced;
+
+		public Builder withId(final Integer val) {
+			this.id = val;
+			return this;
+		}
 
 		public Builder withName(final String val) {
 			this.name = val;
