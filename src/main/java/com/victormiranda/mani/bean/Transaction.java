@@ -1,7 +1,6 @@
 package com.victormiranda.mani.bean;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -17,22 +16,35 @@ import java.util.Optional;
 
 @JsonDeserialize(builder = Transaction.Builder.class)
 public class Transaction {
+
 	private final Optional<Integer> id;
+
 	private final String uid;
-	private final Optional<AccountInfo> account;
+
+	private final BaseAccountInfo account;
+
 	private final Optional<Category> category;
+
 	private final String description;
+
 	private final String descriptionProcessed;
+
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private final LocalDate date;
+
 	private final TransactionFlow flow;
+
 	private final BigDecimal amount;
+
 	private final TransactionStatus status;
 
 	private Transaction(final Builder builder) {
 		this.id = builder.id;
-		this.account = builder.account;
+		this.account = new BaseAccountInfo(
+				builder.account.getId(),
+				builder.account.getName(),
+				builder.account.getAccountNumber());
 		this.uid = builder.uid;
 		this.description = builder.description;
 		this.descriptionProcessed = builder.descriptionProcessed;
@@ -51,7 +63,7 @@ public class Transaction {
 		return uid;
 	}
 
-	public Optional<AccountInfo> getAccount() {
+	public BaseAccountInfo getAccount() {
 		return account;
 	}
 
@@ -90,7 +102,7 @@ public class Transaction {
 		String description;
 		String descriptionProcessed;
 		Optional<Category> category = Optional.empty();
-		Optional<AccountInfo> account = Optional.empty();
+		BaseAccountInfo account;
 		LocalDate date;
 		TransactionFlow flow;
 		BigDecimal amount;
@@ -112,7 +124,7 @@ public class Transaction {
 		public Builder() {}
 
 		public Transaction build() {
-			if (uid == null || description == null) {
+			if (uid == null || description == null || account == null) {
 				throw new IllegalStateException("missing fields, work in progress");
 			}
 			return new Transaction(this);
@@ -143,7 +155,7 @@ public class Transaction {
 			return this;
 		}
 
-		public Builder withAccount(final Optional<AccountInfo> val) {
+		public Builder withAccount(final BaseAccountInfo val) {
 			this.account = val;
 			return this;
 		}

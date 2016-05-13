@@ -1,7 +1,5 @@
 package com.victormiranda.mani.bean;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,30 +12,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonDeserialize(builder = AccountInfo.Builder.class)
-public final class AccountInfo {
-	private final Integer id;
-	private final String name;
-	private final String accountNumber;
+public final class AccountInfo extends BaseAccountInfo {
+
 	private final String alias;
+
 	private final String uid;
+
 	private final BigDecimal availableBalance;
+
 	private final BigDecimal currentBalance;
+
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private final LocalDate lastSynced;
-	@JsonBackReference
+
 	private final List<Transaction> transactions;
 
 	private AccountInfo(final Builder builder) {
-		this.id = builder.id;
-		this.name = builder.name;
-		this.accountNumber = builder.accountNumber;
+		super(builder.id, builder.name, builder.accountNumber);
+
 		this.alias = builder.alias;
 		this.uid = builder.uid;
 		this.availableBalance = builder.availableBalance;
 		this.currentBalance = builder.currentBalance;
 		this.lastSynced = builder.lastSynced;
-		this.transactions = new ArrayList<>();
+		this.transactions = builder.transactions;
 	}
 
 	public Integer getId() {
@@ -86,6 +85,7 @@ public final class AccountInfo {
 		BigDecimal availableBalance;
 		BigDecimal currentBalance;
 		LocalDate lastSynced;
+		List<Transaction> transactions = new ArrayList<>();
 
 		public Builder withId(final Integer val) {
 			this.id = val;
@@ -123,6 +123,11 @@ public final class AccountInfo {
 		}
 		public Builder withLastSynced(final LocalDate val) {
 			this.lastSynced = val;
+			return this;
+		}
+
+		public Builder withTransactions(final List<Transaction> val) {
+			this.transactions = val;
 			return this;
 		}
 
