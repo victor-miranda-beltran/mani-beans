@@ -185,7 +185,7 @@ public class Transaction {
 		}
 
 		public Builder withBalance(final BigDecimal val) {
-			this.amount = val;
+			this.balance = val;
 			return this;
 		}
 
