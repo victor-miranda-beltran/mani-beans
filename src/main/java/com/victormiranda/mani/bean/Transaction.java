@@ -37,6 +37,8 @@ public class Transaction {
 
 	private final BigDecimal amount;
 
+	private final BigDecimal balance;
+
 	private final TransactionStatus status;
 
 	private Transaction(final Builder builder) {
@@ -52,6 +54,7 @@ public class Transaction {
 		this.date = builder.date;
 		this.flow = builder.flow;
 		this.amount = builder.amount;
+		this.balance = builder.balance;
 		this.status = builder.status;
 	}
 
@@ -91,6 +94,10 @@ public class Transaction {
 		return amount;
 	}
 
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
 	public TransactionStatus getStatus() {
 		return status;
 	}
@@ -106,6 +113,7 @@ public class Transaction {
 		LocalDate date;
 		TransactionFlow flow;
 		BigDecimal amount;
+		BigDecimal balance;
 		TransactionStatus status;
 
 		public Builder(final Transaction source) {
@@ -118,6 +126,7 @@ public class Transaction {
 			date = source.getDate();
 			flow = source.getFlow();
 			amount = source.getAmount();
+			balance = source.getBalance();
 			status = source.getStatus();
 		}
 
@@ -170,8 +179,12 @@ public class Transaction {
 			return this;
 		}
 
-
 		public Builder withAmount(final BigDecimal val) {
+			this.amount = val;
+			return this;
+		}
+
+		public Builder withBalance(final BigDecimal val) {
 			this.amount = val;
 			return this;
 		}
