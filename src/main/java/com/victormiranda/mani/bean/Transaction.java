@@ -31,7 +31,11 @@ public class Transaction {
 
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
-	private final LocalDate date;
+	private final LocalDate dateAuthorization;
+
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private final LocalDate dateSettled;
 
 	private final TransactionFlow flow;
 
@@ -51,7 +55,8 @@ public class Transaction {
 		this.description = builder.description;
 		this.descriptionProcessed = builder.descriptionProcessed;
 		this.category = builder.category;
-		this.date = builder.date;
+		this.dateAuthorization = builder.dateAuthorization;
+		this.dateSettled = builder.dateAuthorization;
 		this.flow = builder.flow;
 		this.amount = builder.amount;
 		this.balance = builder.balance;
@@ -82,8 +87,12 @@ public class Transaction {
 		return descriptionProcessed;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getDateAuthorization() {
+		return dateAuthorization;
+	}
+
+	public LocalDate getDateSettled() {
+		return dateSettled;
 	}
 
 	public TransactionFlow getFlow() {
@@ -110,7 +119,8 @@ public class Transaction {
 		String descriptionProcessed;
 		Optional<Category> category = Optional.empty();
 		BaseAccountInfo account;
-		LocalDate date;
+		LocalDate dateAuthorization;
+		LocalDate dateSettled;
 		TransactionFlow flow;
 		BigDecimal amount;
 		BigDecimal balance;
@@ -123,7 +133,8 @@ public class Transaction {
 			descriptionProcessed = source.getDescriptionProcessed();
 			category = source.getCategory();
 			account = source.getAccount();
-			date = source.getDate();
+			dateAuthorization = source.getDateAuthorization();
+			dateSettled = source.getDateSettled();
 			flow = source.getFlow();
 			amount = source.getAmount();
 			balance = source.getBalance();
@@ -136,6 +147,11 @@ public class Transaction {
 			if (uid == null || description == null || account == null) {
 				throw new IllegalStateException("missing fields, work in progress");
 			}
+
+			if (dateAuthorization == null) {
+				dateAuthorization = dateSettled;
+			}
+
 			return new Transaction(this);
 		}
 
@@ -169,8 +185,13 @@ public class Transaction {
 			return this;
 		}
 
-		public Builder withDate(final LocalDate val) {
-			this.date = val;
+		public Builder withDateAuthorization(final LocalDate val) {
+			this.dateAuthorization = val;
+			return this;
+		}
+
+		public Builder withDateSettled(final LocalDate val) {
+			this.dateSettled = val;
 			return this;
 		}
 
