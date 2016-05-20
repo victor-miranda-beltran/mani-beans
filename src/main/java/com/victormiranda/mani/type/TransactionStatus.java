@@ -1,5 +1,5 @@
 package com.victormiranda.mani.type;
 
 public enum TransactionStatus {
-	PENDING,NORMAL
+	PENDING, PENDING_REMOVED, NORMAL
 }

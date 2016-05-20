@@ -28,6 +28,7 @@ public final class AccountInfo extends BaseAccountInfo {
 
 	private final List<Transaction> transactions;
 
+
 	private AccountInfo(final Builder builder) {
 		super(builder.id, builder.name, builder.accountNumber);
 
@@ -86,6 +87,20 @@ public final class AccountInfo extends BaseAccountInfo {
 		BigDecimal currentBalance;
 		LocalDate lastSynced;
 		List<Transaction> transactions = new ArrayList<>();
+
+		public Builder() {}
+
+		public Builder(final AccountInfo accountFrom) {
+			this.id = accountFrom.id;
+			this.name = accountFrom.name;
+			this.accountNumber = accountFrom.accountNumber;
+			this.alias = accountFrom.alias;
+			this.uid = accountFrom.uid;
+			this.availableBalance = accountFrom.availableBalance;
+			this.currentBalance = accountFrom.currentBalance;
+			this.lastSynced = accountFrom.lastSynced;
+			this.transactions = accountFrom.transactions;
+		}
 
 		public Builder withId(final Integer val) {
 			this.id = val;

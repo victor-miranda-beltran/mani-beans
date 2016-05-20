@@ -144,7 +144,7 @@ public class Transaction {
 		public Builder() {}
 
 		public Transaction build() {
-			if (uid == null || description == null || account == null) {
+			if ((uid == null && status == TransactionStatus.NORMAL) || description == null || account == null) {
 				throw new IllegalStateException("missing fields, work in progress");
 			}
 
