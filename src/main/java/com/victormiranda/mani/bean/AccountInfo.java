@@ -30,7 +30,7 @@ public final class AccountInfo extends BaseAccountInfo {
 
 
 	private AccountInfo(final Builder builder) {
-		super(builder.id, builder.name, builder.accountNumber);
+		super(builder.id, builder.name, builder.alias, builder.accountNumber);
 
 		this.alias = builder.alias;
 		this.uid = builder.uid;

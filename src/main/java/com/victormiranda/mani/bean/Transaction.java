@@ -50,6 +50,7 @@ public class Transaction {
 		this.account = new BaseAccountInfo(
 				builder.account.getId(),
 				builder.account.getName(),
+				builder.account.getAlias(),
 				builder.account.getAccountNumber());
 		this.uid = builder.uid;
 		this.description = builder.description;
